@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Media} from "reactstrap";
+import {Card, CardImg, CardImgOverlay, CardTitle} from "reactstrap";
 
 class Catalog extends Component {
 
@@ -9,31 +9,21 @@ class Catalog extends Component {
 
     render() {
         let catalog = this.props.items.map(item => {
-            const imgStyle = {
-                maxHeight: 128,
-                maxWidth: 128
-            };
             return (
-                <div key={item.id} className="col-12 mt-5">
-                    <Media tag="li">
-                        <Media left middle>
-                            <Media object src={item.image} alt={item.name} style={imgStyle}/>
-                        </Media>
-                        <Media body className="ml-5">
-                            <Media heading>{item.name}</Media>
-                            <p>{item.description}</p>
-                        </Media>
-
-                    </Media>
+                <div key={item.id} className="col-md-5 col-12  mt-5">
+                    <Card>
+                        <CardImg width="100%" src={item.image} alt={item.name}/>
+                        <CardImgOverlay>
+                            <CardTitle>{item.name}</CardTitle>
+                        </CardImgOverlay>
+                    </Card>
                 </div>
             );
         });
         return (
             <div className="container">
                 <div className="row">
-                    <Media list>
                         {catalog}
-                    </Media>
                 </div>
 
             </div>

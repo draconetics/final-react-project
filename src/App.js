@@ -2,9 +2,18 @@ import React, {Component} from 'react';
 import './App.css';
 import {Navbar, NavbarBrand} from "reactstrap";
 import Catalog from "./components/CatalogComponent";
+import {ITEMS} from "./shared/items";
 
 class App extends Component {
-  render() {
+
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            items: ITEMS
+        }
+    }
+
+    render() {
     return (
         <div className="App">
             <Navbar dark color="primary">
@@ -12,7 +21,7 @@ class App extends Component {
                     <NavbarBrand href="/">Sistema de Seguridad Industrial</NavbarBrand>
                 </div>
             </Navbar>
-            <Catalog/>
+            <Catalog items={this.state.items}/>
         </div>
     );
   }

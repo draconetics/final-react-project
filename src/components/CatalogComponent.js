@@ -8,11 +8,6 @@ class Catalog extends Component {
         this.state = {
             selectedItem: null
         };
-        console.log("Catalog constructor es invocado");
-    }
-
-    componentDidMount() {
-        console.log("Catalog componentDidMount es invocado");
     }
 
     renderItem(item) {

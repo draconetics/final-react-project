@@ -3,6 +3,14 @@ import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 
 class ItemDetail extends Component {
 
+    componentDidMount() {
+        console.log("ItemDetail componentDidMount es invocado");
+    }
+
+    componentDidUpdate() {
+        console.log("ItemDetail componentDidUpdate es invocado");
+    }
+
     renderItem(item) {
         if (item != null) {
             return (
@@ -57,6 +65,7 @@ class ItemDetail extends Component {
 
 
     render() {
+        console.log("ItemDetail render es invocado");
         return (
             <div className="row">
                 <div className="col-12 col-md-5 m-1">

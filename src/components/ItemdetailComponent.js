@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardBody, CardImg, CardText, CardTitle, Media} from "reactstrap";
+import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 
 class ItemDetail extends Component {
 
@@ -27,23 +27,21 @@ class ItemDetail extends Component {
         if (comments != null) {
             const commentsItems = comments.map((comment) => {
                 return (
-                    <div key={comment.id}>
-                        <Media tag="li">
-                            <Media body>
-                                <p>{comment.comment}</p>
-                                <p>-- {comment.author} , {comment.date}</p>
-                            </Media>
-                        </Media>
-                    </div>
+                    <li key={comment.id}>
+                        <ul className="list-unstyled">
+                            <li>{comment.comment}</li>
+                            <li>-- {comment.author} , {comment.date}</li>
+                        </ul>
+                    </li>
                 );
             });
 
             return (
                 <div>
                     <h4>Comments</h4>
-                    <Media list left>
+                    <ul className="list-unstyled">
                         {commentsItems}
-                    </Media>
+                    </ul>
                 </div>
             );
         } else {

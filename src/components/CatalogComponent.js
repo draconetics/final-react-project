@@ -1,37 +1,28 @@
 import React, {Component} from 'react';
-import {Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle} from "reactstrap";
+import {Card, CardImg, CardImgOverlay, CardTitle} from "reactstrap";
+import ItemDetail from "./ItemdetailComponent";
 
 class Catalog extends Component {
 
     constructor(props, context) {
         super(props, context);
+
         this.state = {
             selectedItem: null
         };
     }
 
-    renderItem(item) {
-        if (item != null) {
-            return (
-                <Card>
-                    <CardImg width="100%" src={item.image} alt={item.name}/>
-                    <CardBody>
-                        <CardTitle>{item.name}</CardTitle>
-                        <CardText>{item.description}</CardText>
-                    </CardBody>
-                </Card>
-            )
-        } else {
-            return (
-                <div/>
-            )
-        }
+    onItemSelect(item) {
+        this.setState({
+            selectedItem: item
+        })
     }
 
     render() {
-        let catalog = this.props.items.map(item => {
+
+        var catalog = this.props.items.map(item => {
             return (
-                <div key={item.id} className="col-md-5 col-12  mt-5">
+                <div key={item.id} className="col-12 col-md-5 m-1">
                     <Card onClick={() => {
                         this.onItemSelect(item)
                     }}>
@@ -48,20 +39,9 @@ class Catalog extends Component {
                 <div className="row">
                     {catalog}
                 </div>
-                <div className="row">
-                    {this.renderItem(this.state.selectedItem)}
-                </div>
-
+                <ItemDetail selectedItem={this.state.selectedItem}/>
             </div>
         );
-    }
-
-    onItemSelect(item) {
-        this.setState(
-            {
-                selectedItem: item
-            }
-        )
     }
 }
 

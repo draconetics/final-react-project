@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardImg, CardImgOverlay, CardTitle} from "reactstrap";
 
-function RenderMenuItem({item, onClick}) {
+function RenderCatalogItem({item, onClick}) {
     return (
         <Card onClick={() => {
             onClick(item.id)
@@ -18,7 +18,7 @@ const Catalog = (props) => {
     var catalog = props.items.map(item => {
         return (
             <div key={item.id} className="col-12 col-md-5 m-1">
-                <RenderMenuItem item={item} onClick={props.onClick}/>
+                <RenderCatalogItem item={item} onClick={props.onClick}/>
             </div>
         );
     });

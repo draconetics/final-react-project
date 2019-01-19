@@ -30,7 +30,11 @@ class ItemDetail extends Component {
                     <li key={comment.id}>
                         <ul className="list-unstyled">
                             <li>{comment.comment}</li>
-                            <li>-- {comment.author} , {comment.date}</li>
+                            <li>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: '2-digit'
+                            }).format(new Date(Date.parse(comment.date)))}</li>
                         </ul>
                     </li>
                 );
@@ -56,10 +60,10 @@ class ItemDetail extends Component {
         return (
             <div className="row">
                 <div className="col-12 col-md-5 m-1">
-                    {this.renderItem(this.props.selectedItem)}
+                    {this.renderItem(this.props.item)}
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    {this.renderComments(this.props.selectedItem ? this.props.selectedItem.comments : null)}
+                    {this.renderComments(this.props.item ? this.props.item.comments : null)}
                 </div>
             </div>
         );

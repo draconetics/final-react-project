@@ -5,13 +5,18 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./HomeComponent";
+import Contact from "./ContactComponent";
+import {COMMENTS} from "../shared/comments";
+import {EMPLOYEES} from "../shared/employees";
 
 class Main extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            items: ITEMS
+            items: ITEMS,
+            comments: COMMENTS,
+            employees: EMPLOYEES
         };
         console.log("Main constructor es invocado");
     }
@@ -19,7 +24,10 @@ class Main extends Component {
     render() {
         const HomePage = () => {
             return (
-                <Home/>
+                <Home
+                    item={this.state.items.filter(item => item.featured)[0]}
+                    employee={this.state.employees.filter(employee => employee.featured)[0]}
+                />
             );
         };
 
@@ -29,6 +37,7 @@ class Main extends Component {
                 <Header/>
                 <Switch>
                     <Route path='/home' component={HomePage}/>
+                    <Route path='/contactus' component={Contact}/>
                     <Route exact path='/catalog' component={() => <Catalog items={this.state.items}/>}/>
                     <Redirect to="/home"/>
                 </Switch>

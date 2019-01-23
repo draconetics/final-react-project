@@ -8,6 +8,7 @@ import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import {COMMENTS} from "../shared/comments";
 import {EMPLOYEES} from "../shared/employees";
+import ItemDetail from "./ItemdetailComponent";
 
 class Main extends Component {
 
@@ -22,6 +23,13 @@ class Main extends Component {
     }
 
     render() {
+        const ItemWithId = ({match}) => {
+            return (
+                <ItemDetail item={this.state.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
+                            comments={this.state.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}/>
+            );
+        };
+
         const HomePage = () => {
             return (
                 <Home
@@ -39,6 +47,7 @@ class Main extends Component {
                     <Route path='/home' component={HomePage}/>
                     <Route path='/contactus' component={Contact}/>
                     <Route exact path='/catalog' component={() => <Catalog items={this.state.items}/>}/>
+                    <Route path='/catalog/:itemId' component={ItemWithId}/>
                     <Redirect to="/home"/>
                 </Switch>
                 <Footer/>

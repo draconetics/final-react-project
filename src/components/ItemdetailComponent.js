@@ -1,5 +1,6 @@
 import React from 'react';
-import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
+import {Breadcrumb, BreadcrumbItem, Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
+import {Link} from "react-router-dom";
 
 
 function RenderItem({item}) {
@@ -56,14 +57,23 @@ function RenderComments({comments}) {
 
 
 const ItemDetail = (props) => {
-    console.log("ItemDetail render es invocado");
     return (
-        <div className="row">
+        <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/catalog">Catalog</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{props.item.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{props.item.name}</h3>
+                    <hr/>
+                </div>
+            </div>
             <div className="col-12 col-md-5 m-1">
                 <RenderItem item={props.item}/>
             </div>
             <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.item ? props.item.comments : null}/>
+                <RenderComments comments={props.comments}/>
             </div>
         </div>
     );

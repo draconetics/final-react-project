@@ -4,12 +4,38 @@ import {Link} from 'react-router-dom';
 
 function About(props) {
 
-    const employees = props.employees.map((employee) => {
+    const RenderEmployees = (props) => {
+        const imgStyle = {
+            maxHeight: 128,
+            maxWidth: 128
+        };
         return (
-            <p>Employee {employee.name}</p>
+            props.employees.map((employee) => {
+                return (
+                    <div key={employee.id} className="col-12 mt-5">
+                        <Media tag="li">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-1">
+                                        <Media left middle>
+                                            <Media object src={employee.image} style={imgStyle} alt={employee.name}/>
+                                        </Media>
+                                    </div>
+                                    <div className="col-10">
+                                        <Media body className="ml-5">
+                                            <Media heading>{employee.name}</Media>
+                                            <p>{employee.jobPosition}</p>
+                                            <p>{employee.description}</p>
+                                        </Media>
+                                    </div>
+                                </div>
+                            </div>
+                        </Media>
+                    </div>
+                );
+            })
         );
-    });
-
+    };
     return (
         <div className="container">
             <div className="row">
@@ -71,7 +97,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {employees}
+                        <RenderEmployees employees={props.employees}/>
                     </Media>
                 </div>
             </div>

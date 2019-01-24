@@ -9,6 +9,7 @@ import Contact from "./ContactComponent";
 import {COMMENTS} from "../shared/comments";
 import {EMPLOYEES} from "../shared/employees";
 import ItemDetail from "./ItemdetailComponent";
+import About from "./AboutComponent";
 
 class Main extends Component {
 
@@ -46,6 +47,7 @@ class Main extends Component {
                 <Switch>
                     <Route path='/home' component={HomePage}/>
                     <Route path='/contactus' component={Contact}/>
+                    <Route path='/aboutus' component={() => <About employees={this.state.employees}/>}/>
                     <Route exact path='/catalog' component={() => <Catalog items={this.state.items}/>}/>
                     <Route path='/catalog/:itemId' component={ItemWithId}/>
                     <Redirect to="/home"/>

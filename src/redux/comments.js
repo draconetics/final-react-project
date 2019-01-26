@@ -6,7 +6,6 @@ export const Comments = (state = COMMENTS, action) => {
         case ActionTypes.ADD_COMMENT:
             let comment = action.payload;
             comment.id = state.length;
-            comment.comment = action.payload.comment;
             comment.date = new Date().toISOString();
             let concat = state.concat(comment);
 

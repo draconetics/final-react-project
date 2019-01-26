@@ -1,6 +1,7 @@
 import React from 'react';
 import {Breadcrumb, BreadcrumbItem, Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 import {Link} from "react-router-dom";
+import CommentForm from "./CommentFormComponent";
 
 
 function RenderItem({item}) {
@@ -46,6 +47,7 @@ function RenderComments({comments}) {
                 <ul className="list-unstyled">
                     {commentsItems}
                 </ul>
+                <CommentForm/>
             </div>
         );
     } else {

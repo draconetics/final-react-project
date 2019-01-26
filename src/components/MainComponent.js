@@ -1,41 +1,42 @@
 import React, {Component} from 'react';
-import {ITEMS} from "../shared/items";
 import Catalog from "./CatalogComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
-import {COMMENTS} from "../shared/comments";
-import {EMPLOYEES} from "../shared/employees";
 import ItemDetail from "./ItemdetailComponent";
 import About from "./AboutComponent";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state) => {
+    return {
+        items: state.items,
+        employees: state.employees,
+        comments: state.comments
+    }
+};
 
 class Main extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            items: ITEMS,
-            comments: COMMENTS,
-            employees: EMPLOYEES
-        };
         console.log("Main constructor es invocado");
     }
 
     render() {
         const ItemWithId = ({match}) => {
             return (
-                <ItemDetail item={this.state.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
-                            comments={this.state.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}/>
+                <ItemDetail item={this.props.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
+                            comments={this.props.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}/>
             );
         };
 
         const HomePage = () => {
             return (
                 <Home
-                    item={this.state.items.filter(item => item.featured)[0]}
-                    employee={this.state.employees.filter(employee => employee.featured)[0]}
+                    item={this.props.items.filter(item => item.featured)[0]}
+                    employee={this.props.employees.filter(employee => employee.featured)[0]}
                 />
             );
         };
@@ -47,8 +48,8 @@ class Main extends Component {
                 <Switch>
                     <Route path='/home' component={HomePage}/>
                     <Route path='/contactus' component={Contact}/>
-                    <Route path='/aboutus' component={() => <About employees={this.state.employees}/>}/>
-                    <Route exact path='/catalog' component={() => <Catalog items={this.state.items}/>}/>
+                    <Route path='/aboutus' component={() => <About employees={this.props.employees}/>}/>
+                    <Route exact path='/catalog' component={() => <Catalog items={this.props.items}/>}/>
                     <Route path='/catalog/:itemId' component={ItemWithId}/>
                     <Redirect to="/home"/>
                 </Switch>
@@ -58,4 +59,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));

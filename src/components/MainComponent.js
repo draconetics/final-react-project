@@ -8,7 +8,9 @@ import Contact from "./ContactComponent";
 import ItemDetail from "./ItemdetailComponent";
 import About from "./AboutComponent";
 import {connect} from "react-redux";
+import {addComment} from "../redux/ActionCreators";
 
+// de redux al componente
 const mapStateToProps = (state) => {
     return {
         items: state.items,
@@ -16,6 +18,11 @@ const mapStateToProps = (state) => {
         comments: state.comments
     }
 };
+
+// del componente a redux
+const mapDispatchToProps = dispatch => ({
+    addComment: (itemId, rating, author, comment) => dispatch(addComment(itemId, rating, author, comment))
+});
 
 class Main extends Component {
 
@@ -28,7 +35,9 @@ class Main extends Component {
         const ItemWithId = ({match}) => {
             return (
                 <ItemDetail item={this.props.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
-                            comments={this.props.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}/>
+                            comments={this.props.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}
+                            addComment={this.props.addComment}
+                />
             );
         };
 
@@ -59,4 +68,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

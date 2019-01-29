@@ -1,7 +1,7 @@
 import {COMMENTS} from "../shared/comments";
 import * as ActionTypes from "./ActionTypes";
 
-export const Comments = (state = COMMENTS, action) => {
+export const Comments = (state = [], action) => {
     switch (action.type) {
         case ActionTypes.ADD_COMMENT:
             let comment = action.payload;
@@ -13,6 +13,9 @@ export const Comments = (state = COMMENTS, action) => {
             console.log("State: " + state);
             console.log("Concat result: " + concat);
             return concat;
+        case ActionTypes.ADD_COMMENTS_DB:
+            return {...state, comments: action.payload};
+            
         default:
             return state;
     }

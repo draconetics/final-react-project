@@ -8,7 +8,7 @@ import Contact from "./ContactComponent";
 import ItemDetail from "./ItemdetailComponent";
 import About from "./AboutComponent";
 import {connect} from "react-redux";
-import {addComment} from "../redux/ActionCreators";
+import {addComment, fetchItems} from "../redux/ActionCreators";
 
 // de redux al componente
 const mapStateToProps = (state) => {
@@ -21,7 +21,8 @@ const mapStateToProps = (state) => {
 
 // del componente a redux
 const mapDispatchToProps = dispatch => ({
-    addComment: (itemId, rating, author, comment) => dispatch(addComment(itemId, rating, author, comment))
+    addComment: (itemId, rating, author, comment) => dispatch(addComment(itemId, rating, author, comment)),
+    fetchItems: () => dispatch(fetchItems())
 });
 
 class Main extends Component {
@@ -31,12 +32,19 @@ class Main extends Component {
         console.log("Main constructor es invocado");
     }
 
+    componentDidMount() {
+        this.props.fetchItems();
+    }
+
     render() {
         const ItemWithId = ({match}) => {
             return (
-                <ItemDetail item={this.props.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
-                            comments={this.props.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}
-                            addComment={this.props.addComment}
+                <ItemDetail
+                    item={this.props.items.items.filter((item) => item.id === parseInt(match.params.itemId, 10))[0]}
+                    itemsLoading={this.props.items.isLoading}
+                    itemsErrMess={this.props.items.errMess}
+                    comments={this.props.comments.filter((comment) => comment.itemId === parseInt(match.params.itemId, 10))}
+                    addComment={this.props.addComment}
                 />
             );
         };
@@ -44,7 +52,9 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                    item={this.props.items.filter(item => item.featured)[0]}
+                    item={this.props.items.items.filter(item => item.featured)[0]}
+                    itemsLoading={this.props.items.isLoading}
+                    itemsErrMess={this.props.items.errMess}
                     employee={this.props.employees.filter(employee => employee.featured)[0]}
                 />
             );

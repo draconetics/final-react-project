@@ -9,6 +9,7 @@ import ItemDetail from "./ItemdetailComponent";
 import About from "./AboutComponent";
 import {connect} from "react-redux";
 import {addComment, fetchItems} from "../redux/ActionCreators";
+import {actions} from "react-redux-form";
 
 // de redux al componente
 const mapStateToProps = (state) => {
@@ -22,7 +23,10 @@ const mapStateToProps = (state) => {
 // del componente a redux
 const mapDispatchToProps = dispatch => ({
     addComment: (itemId, rating, author, comment) => dispatch(addComment(itemId, rating, author, comment)),
-    fetchItems: () => dispatch(fetchItems())
+    fetchItems: () => dispatch(fetchItems()),
+    resetFeedbackForm: () => {
+        dispatch(actions.reset('feedback'))
+    }
 });
 
 class Main extends Component {
@@ -66,7 +70,8 @@ class Main extends Component {
                 <Header/>
                 <Switch>
                     <Route path='/home' component={HomePage}/>
-                    <Route path='/contactus' component={Contact}/>
+                    <Route path='/contactus'
+                           component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
                     <Route path='/aboutus' component={() => <About employees={this.props.employees}/>}/>
                     <Route exact path='/catalog' component={() => <Catalog items={this.props.items}/>}/>
                     <Route path='/catalog/:itemId' component={ItemWithId}/>
